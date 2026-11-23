@@ -1,0 +1,17 @@
+// One-Line Roast: The Gadget You Use Every Day
+// Writes a single original roast line (max 200 chars) to entry.txt.
+import { mkdirSync, writeFileSync } from "node:fs";
+import { join } from "node:path";
+
+const LINE =
+  "My wireless earbuds die one at a time, like they're taking turns ghosting me mid-sentence.";
+
+// Gate: the scorer only accepts UTF-8 text of 1 to 200 characters.
+const MAX_CHARS = 200;
+if (LINE.length < 1 || LINE.length > MAX_CHARS || LINE.trim().length === 0) {
+  throw new Error(`Roast line is ${LINE.length} chars; gate needs 1-${MAX_CHARS}.`);
+}
+
+const outDir = process.env.MAKEFUN_OUTPUT_DIR ?? "/output";
+mkdirSync(outDir, { recursive: true });
+writeFileSync(join(outDir, "entry.txt"), LINE, "utf8");
